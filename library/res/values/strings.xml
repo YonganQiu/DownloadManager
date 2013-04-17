@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DownloadManager</string>
+
+    <string name="state_downloading">Downloading…</string>
+    <string name="state_paused">Paused</string>
+    <string name="state_pending">Pending…</string>
+
+</resources>
