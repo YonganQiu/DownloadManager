@@ -1,16 +1,10 @@
 
-package com.elvishew.download.demo;
+package com.elvishew.download.clientdemo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.elvishew.download.library.DownloadClient;
-import com.elvishew.download.library.DownloadManager;
-import com.elvishew.download.library.DownloadProgressData;
-import com.elvishew.download.library.DownloadingItem;
-
-import me.elvishew.download.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +12,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import com.elvishew.download.library.client.DownloadService;
+import com.elvishew.download.library.server.DownloadManager;
+import com.elvishew.download.library.server.DownloadProgressData;
+import com.elvishew.download.library.server.DownloadingItem;
+
 public class DownloadListAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<DownloadingItem> mDownloads = new ArrayList<DownloadingItem>();
     private HashMap<String, DownloadProgressData> mProgressMap = new HashMap<String, DownloadProgressData>();
-    private DownloadManager mDownloadManager;
+    private DownloadService mDownloadService;
 
-    public DownloadListAdapter(Context context, DownloadClient downloadClient, DownloadManager downloadManager) {
+    public DownloadListAdapter(Context context, DownloadService downloadService) {
         mContext = context;
-        mDownloadManager = downloadManager;
-        mDownloads = mDownloadManager.getAllDownloadings("demo");
+        mDownloadService = downloadService;
+        mDownloads = mDownloadService.getAllDownloadings();
     }
 
     public void setItems(List<DownloadingItem> items) {
@@ -139,13 +138,13 @@ public class DownloadListAdapter extends BaseAdapter {
             switch (v.getId()) {
                 case R.id.btn_downloading:
                 case R.id.btn_pending:
-                    result = mDownloadManager.pauseDownloading("demo", item.getUrl());
+                    result = mDownloadService.pauseDownloading(item.getUrl());
                     break;
                 case R.id.btn_paused:
-                    result = mDownloadManager.resumeDownloading("demo", item.getUrl());
+                    result = mDownloadService.resumeDownloading(item.getUrl());
                     break;
                 case R.id.btn_delete:
-                    result = mDownloadManager.deleteDownloading("demo", item.getUrl());
+                    result = mDownloadService.deleteDownloading(item.getUrl());
                     break;
             }
             if (result != DownloadManager.ERROR_NO_ERROR) {

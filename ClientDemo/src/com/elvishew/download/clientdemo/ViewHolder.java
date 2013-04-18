@@ -1,14 +1,13 @@
 
-package com.elvishew.download.demo;
+package com.elvishew.download.clientdemo;
 
-import com.elvishew.download.library.DownloadProgressData;
-import com.elvishew.download.library.DownloadingItem;
-
-import me.elvishew.download.R;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.elvishew.download.library.server.DownloadProgressData;
+import com.elvishew.download.library.server.DownloadingItem;
 
 public class ViewHolder {
 

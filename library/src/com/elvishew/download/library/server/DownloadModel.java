@@ -2,11 +2,9 @@ package com.elvishew.download.library.server;
 
 import android.net.Uri;
 
-import com.elvishew.download.library.BaseDownloadableColumns;
-
 public class DownloadModel {
 
-    public static final String AUTHORITY = "me.elvishew.download";
+    public static final String AUTHORITY = "com.elvishew.download";
 
     public static final String PARAMETER_NOTIFY = "notify";
 
@@ -21,6 +19,37 @@ public class DownloadModel {
     }
 
     /**
+     * Base columns of an downloadable item.
+     */
+    public interface BaseDownloadableColumns {
+
+        /**
+         * ID column.
+         * <p>
+         * Type: INTEGER
+         * </p>
+         */
+        public static final String _ID = "_id";
+
+        /**
+         * The name of the downloadable.
+         * <P>
+         * Type: TEXT
+         * </P>
+         */
+        public static final String NAME = "name";
+
+        /**
+         * The remote url of the downloadable, like
+         * "http://www.qipaoxian.com/test.mp4".
+         * <P>
+         * Type: TEXT
+         * </P>
+         */
+        public static final String URL = "url";
+    }
+
+    /**
      * Base columns of an download-like item.
      */
     public interface BaseDownload extends BaseDownloadableColumns {
@@ -31,38 +60,38 @@ public class DownloadModel {
         public static final String REQUESTER = "REQUESTER";
 
         /**
-         * The save path of local video.
+         * The save path of local downloadable.
          * <P>Type: TEXT</P>
          */
         public static final String SAVE_PATH = "save_path";
 
         /**
-         * The file length of video.
+         * The file length of downloadable.
          * <P>Type: INTEGER</P>
          */
         public static final String FILE_LENGTH = "file_length";
     }
 
     /**
-     * Downloaded videos.
+     * Downloaded downloadables.
      */
     public static class Downloaded implements BaseDownload {
         /**
-         * The content:// style URI for all downloaded videos.
+         * The content:// style URI for all downloaded downloadables.
          */
         public static final Uri CONTENT_URI = Uri.parse("content://"
                 + AUTHORITY + "/" + Tables.DOWNLOADED);
 
         /**
-         * The content:// style URI for all downloaded videos, with no notification when
-         * downloaded videos change.
+         * The content:// style URI for all downloaded downloadables, with no notification when
+         * downloaded downloadables change.
          */
         public static final Uri CONTENT_URI_NO_NOTIFICATION = Uri
                 .parse("content://" + AUTHORITY + "/" + Tables.DOWNLOADED + "?"
                             + PARAMETER_NOTIFY + "=false");
 
         /**
-         * The finish time of downloaded video.
+         * The finish time of downloaded downloadable.
          * <P>Type: INTEGER</P>
          */
         public static final String FINISH_TIME = "finish_time";
@@ -81,38 +110,38 @@ public class DownloadModel {
     }
 
     /**
-     * Downloading videos, we can pause, resume or cancel any download task
+     * Downloading downloadables, we can pause, resume or cancel any download task
      * while downloading.
      */
     public static class Downloading implements BaseDownload {
         /**
-         * The content:// style URI for all downloading videos.
+         * The content:// style URI for all downloading downloadables.
          */
         public static final Uri CONTENT_URI = Uri.parse("content://"
                 + AUTHORITY + "/" + Tables.DOWNLOADING);
 
         /**
-         * The content:// style URI for all downloading videos, with no notification when
-         * downloading videos change.
+         * The content:// style URI for all downloading downloadables, with no notification when
+         * downloading downloadables change.
          */
         public static final Uri CONTENT_URI_NO_NOTIFICATION = Uri
                 .parse("content://" + AUTHORITY + "/" + Tables.DOWNLOADING + "?"
                             + PARAMETER_NOTIFY + "=false");
 
         /**
-         * The start time of downloading video.
+         * The start time of downloading downloadable.
          * <P>Type: INTEGER</P>
          */
         public static final String START_TIME = "start_time";
 
         /**
-         * The completed length of downloading video.
+         * The completed length of downloading downloadable.
          * <P>Type: INTEGER</P>
          */
         public static final String COMPLETED_LENGTH = "completed_length";
 
         /**
-         * The download state of downloading video.
+         * The download state of downloading downloadable.
          * <P>Type: INTEGER</P>
          */
         public static final String STATE = "state";

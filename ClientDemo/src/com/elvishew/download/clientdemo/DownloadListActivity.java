@@ -1,19 +1,9 @@
 
-package com.elvishew.download.demo;
+package com.elvishew.download.clientdemo;
 
 import java.util.List;
 
-import com.elvishew.download.library.DownloadClient;
-import com.elvishew.download.library.DownloadManager;
-import com.elvishew.download.library.DownloadProgressData;
-import com.elvishew.download.library.DownloadRequest;
-import com.elvishew.download.library.DownloadedItem;
-import com.elvishew.download.library.DownloadingItem;
-import com.elvishew.download.library.VideoItem;
-import com.elvishew.download.library.utils.PathUtil;
-import com.elvishew.download.library.utils.StorageUtils;
-
-import me.elvishew.download.R;
+import android.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,30 +12,36 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.elvishew.download.library.DownloadListener;
+import com.elvishew.download.library.client.DownloadService;
+import com.elvishew.download.library.server.DownloadManager;
+import com.elvishew.download.library.server.DownloadProgressData;
+import com.elvishew.download.library.server.DownloadRequest;
+import com.elvishew.download.library.server.DownloadableItem;
+import com.elvishew.download.library.server.DownloadedItem;
+import com.elvishew.download.library.server.DownloadingItem;
+import com.elvishew.download.library.utils.PathUtil;
+import com.elvishew.download.library.utils.StorageUtils;
+
 public class DownloadListActivity extends Activity {
 
-    public static VideoItem[] videos = {
-            new VideoItem("小毛驴", "http://rs.qipaoxian.com/mp4/001.mp4",
-                    "http://www.qipaoxian.com/iso/pic/1356156732538.jpg"),
-            new VideoItem("世上只有妈妈好", "http://rs.qipaoxian.com/mp4/002.mp4",
-                    "http://www.qipaoxian.com/iso/pic/1356156805432.jpg"),
-            new VideoItem("爱我你就抱抱我", "http://rs.qipaoxian.com/mp4/003.mp4",
-                    "http://www.qipaoxian.com/iso/pic/1356156858206.jpg"),
-            new VideoItem("春天在哪里", "http://rs.qipaoxian.com/mp4/004.mp4",
-                    "http://www.qipaoxian.com/iso/pic/1356156893482.jpg"),
-            new VideoItem("种太阳", "http://rs.qipaoxian.com/mp4/055.MP4",
-                    "http://www.qipaoxian.com/iso/pic/1356147389136.jpg")
+    public static DownloadableItem[] downloadables = {
+            new DownloadableItem("小毛驴", "http://rs.qipaoxian.com/mp4/001.mp4"),
+            new DownloadableItem("世上只有妈妈好", "http://rs.qipaoxian.com/mp4/002.mp4"),
+            new DownloadableItem("爱我你就抱抱我", "http://rs.qipaoxian.com/mp4/003.mp4"),
+            new DownloadableItem("春天在哪里", "http://rs.qipaoxian.com/mp4/004.mp4"),
+            new DownloadableItem("种太阳", "http://rs.qipaoxian.com/mp4/055.MP4")
     };
 
     private static final String TAG = "DownloadActivity";
 
-    private DownloadManager mDownloadManager;
+    private DownloadService mDownloadService;
 
     private ListView mList;
     private Button mAddDownloadButton;
     private Button mPauseAllButton;
 
-    private DownloadClient mDownloadClient;
+    private DownloadListener mDownloadListener;
 
     private DownloadListAdapter mAdapter;
 
@@ -56,9 +52,9 @@ public class DownloadListActivity extends Activity {
 
         setContentView(R.layout.download_list_activity);
 
-        mDownloadManager = DownloadManager.getDefault(this);
-        mDownloadClient = new DefaultDownloadClient();
-        mDownloadManager.registerClient("demo", mDownloadClient.getIDownloadClient());
+        mDownloadService = new DownloadService(this, "demo");
+        mDownloadService.registerDownloadListener(mDownloadListener);
+        mDownloadListener = new DefaultDownloadClient();
 
         if (!StorageUtils.isSDCardPresent()) {
             Toast.makeText(this, "未发现SD卡", Toast.LENGTH_LONG).show();
@@ -71,7 +67,7 @@ public class DownloadListActivity extends Activity {
         }
 
         mList = (ListView) findViewById(R.id.download_list);
-        mAdapter = new DownloadListAdapter(this, mDownloadClient, mDownloadManager);
+        mAdapter = new DownloadListAdapter(this, mDownloadService);
         mList.setAdapter(mAdapter);
 
         mAddDownloadButton = (Button) findViewById(R.id.btn_add1);
@@ -111,7 +107,7 @@ public class DownloadListActivity extends Activity {
         mPauseAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int result = mDownloadManager.pauseAllDownloadings("demo");
+                int result = mDownloadService.pauseAllDownloadings();
                 if (result != DownloadManager.ERROR_NO_ERROR) {
                     Toast.makeText(DownloadListActivity.this, "Error happened: " + result, Toast.LENGTH_LONG).show();
                 }
@@ -121,11 +117,12 @@ public class DownloadListActivity extends Activity {
     }
 
     private void addDownload(int index) {
-        if (index >= videos.length) {
+        if (index >= downloadables.length) {
             index = 0;
         }
-        VideoItem video = videos[index];
-        int result = mDownloadManager.addDownloading(new DownloadRequest(video, "demo", PathUtil.getVideoFilePath(video.getName(), video.getUrl())));
+        DownloadableItem downloadable = downloadables[index];
+        int result = mDownloadService.addDownloading(downloadable,
+                PathUtil.getVideoFilePath(downloadable.getName(), downloadable.getUrl()));
         if (result != DownloadManager.ERROR_NO_ERROR) {
             Toast.makeText(DownloadListActivity.this, "Error happened: " + result, Toast.LENGTH_LONG).show();
         }
@@ -134,11 +131,11 @@ public class DownloadListActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDownloadManager.pauseAllDownloadings("demo");
-        mDownloadManager.unregisterClient("demo");
+        mDownloadService.pauseAllDownloadings();
+        mDownloadService.unregisterDownloadListener(mDownloadListener);
     }
 
-    class DefaultDownloadClient extends DownloadClient {
+    class DefaultDownloadClient implements DownloadListener {
 
         @Override
         public void onDownloadAddingFail(DownloadRequest request, int errorCode) {

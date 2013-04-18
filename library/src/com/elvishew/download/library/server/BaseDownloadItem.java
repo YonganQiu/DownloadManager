@@ -42,18 +42,18 @@ public abstract class BaseDownloadItem extends DownloadableItem {
     }
 
     /**
-     * Return the path you save this video.
+     * Return the path you save this downloadable.
      * 
-     * @return the path you save this video
+     * @return the path you save this downloadable
      */
     public String getSavePath() {
         return mSavePath;
     }
 
     /**
-     * Return the length of the video file you try to download.
+     * Return the length of the downloadable file you try to download.
      * 
-     * @return the length of the video file
+     * @return the length of the downloadable file
      */
     public int getFileLength() {
         return mFileLength;

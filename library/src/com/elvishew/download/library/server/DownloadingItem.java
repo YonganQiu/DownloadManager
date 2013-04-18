@@ -1,8 +1,9 @@
 package com.elvishew.download.library.server;
 
-import me.elvishew.download.R;
 import android.content.res.Resources;
 import android.os.Parcel;
+
+import com.elvishew.download.library.R;
 
 /**
  * Downloadable that you are downloading, not finished yet.

@@ -1,10 +1,10 @@
 package com.elvishew.download.library.server;
 
-import com.elvishew.download.library.BaseDownloadableColumns;
-
 import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.elvishew.download.library.server.DownloadModel.BaseDownloadableColumns;
 
 public class DownloadableItem implements Parcelable {
 
@@ -23,18 +23,18 @@ public class DownloadableItem implements Parcelable {
     }
 
     /**
-     * Return remote url of this video.
+     * Return remote url of this downloadable.
      * 
-     * @return remote url of this video
+     * @return remote url of this downloadable
      */
     public String getUrl() {
         return mUrl;
     }
 
     /**
-     * Return name of this video.
+     * Return name of this downloadable.
      * 
-     * @return name of this video
+     * @return name of this downloadable
      */
     public String getName() {
         return mName;

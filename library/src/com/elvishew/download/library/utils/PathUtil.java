@@ -22,7 +22,7 @@ public class PathUtil {
         }
         DATA_DIRECTORY_PATH = storageDir + ".qipaoxian";
         CACHES_DIRECTORY_PATH = DATA_DIRECTORY_PATH + File.separator + "caches";
-        VIDEOS_DIRECTORY_PATH = DATA_DIRECTORY_PATH + File.separator + "videos";
+        VIDEOS_DIRECTORY_PATH = DATA_DIRECTORY_PATH + File.separator + "downloadables";
     }
 
     public static String getDataDirectoryPath() {
@@ -49,22 +49,22 @@ public class PathUtil {
     }
 
     /**
-     * Get the local video file path for the remote file.
+     * Get the local downloadable file path for the remote file.
      * 
      * @param name the name of the remote file
      * @param remoteUrl the url of the remote file
-     * @return the local video file path
+     * @return the local downloadable file path
      */
     public static String getVideoFilePath(String name, String remoteUrl) {
         return getVideosDirectoryPath() + File.separator + name + getSuffix(remoteUrl);
     }
 
     /**
-     * Get the local video temp file path for the remote file.
+     * Get the local downloadable temp file path for the remote file.
      * 
      * @param name the name of the remote file
      * @param remoteUrl the url of the remote file
-     * @return the local video temp file path
+     * @return the local downloadable temp file path
      */
     public static String getVideoTempFilePath(String name, String remoteUrl) {
         return getVideoFilePath(name, remoteUrl) + TEMP_SUFFIX;

@@ -7,4 +7,28 @@
     <string name="state_paused">Paused</string>
     <string name="state_pending">Pending…</string>
 
+    <string name="download_error_already_downloaded">儿歌已存在</string>
+    <string name="download_error_already_added">下载任务已添加</string>
+    <string name="download_error_sdcard_not_found">未找到SD卡</string>
+    <string name="download_error_sdcard_not_writable">SD卡不可写</string>
+    <string name="download_error_storage_not_enough">存储空间不足</string>
+    <string name="download_error_downloading_list_full">下载任务已达上限</string>
+    <string name="download_error_network_not_available">网络不可用</string>
+    <string name="download_error_network_error">网络错误</string>
+    <string name="download_error_fetch_file_length_fail">儿歌信息获取失败</string>
+    <string name="download_error_create_file_fail">儿歌文件新建失败</string>
+    <string name="download_error_download_init_fail">下载初始化失败</string>
+    <string name="download_error_download_params_error">下载参数错误</string>
+    <string name="download_error_temp_file_lost">儿歌临时文件丢失</string>
+    <string name="download_error_io_error">读写错误</string>
+    <string name="download_error_duplicate_download_request">下载请求重复</string>
+    <string name="download_error_unknown_error">未知错误</string>
+    <string name="download_error_network_time_out">网络超时</string>
+    <string name="download_error_already_resumed">下载已继续</string>
+    <string name="download_error_already_paused">下载已暂停</string>
+    <string name="download_error_download_not_found">找不到下载任务</string>
+    <string name="download_error_downloaded_delete_fail">删除已下载儿歌失败</string>
+    <string name="download_error_downloaded_not_found">找不到已下载儿歌</string>
+    <string name="download_error_download_client_not_found">下载请求端未找到</string>
+
 </resources>

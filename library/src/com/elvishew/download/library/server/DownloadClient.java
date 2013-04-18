@@ -3,34 +3,13 @@ package com.elvishew.download.library.server;
 
 import java.util.List;
 
+import com.elvishew.download.library.DownloadListener;
+
 import android.os.RemoteException;
 
-public abstract class DownloadClient {
+public abstract class DownloadClient implements DownloadListener {
 
     private Transport mTransport = new Transport();
-
-    public abstract void onDownloadAddingFail(DownloadRequest request, int errorCode);
-
-    public abstract void onDownloadingAdded(DownloadingItem download);
-
-    public abstract void onDownloadingStateChanged(DownloadingItem download);
-
-    public abstract void onDownloadingsStateChanged(List<DownloadingItem> downloads);
-
-    public abstract void onDownloadingDeleted(DownloadingItem download);
-
-    public abstract void onDownloadingsDeleted(List<DownloadingItem> downloads);
-
-    public abstract void onDownloadingProgressUpdate(DownloadingItem download,
-            DownloadProgressData progress);
-
-    public abstract void onDownloadingError(DownloadingItem download, int errorCode);
-
-    public abstract void onDownloadedAdded(DownloadedItem download);
-
-    public abstract void onDownloadedDeleted(DownloadedItem download);
-
-    public abstract void onDownloadedsDeleted(List<DownloadedItem> downloads);
 
     public IDownloadClient getIDownloadClient() {
         return mTransport;

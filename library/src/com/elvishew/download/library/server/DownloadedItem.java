@@ -24,9 +24,9 @@ public class DownloadedItem extends BaseDownloadItem {
     }
 
     /**
-     * Return the time this video is completely downloaded.
+     * Return the time this downloadable is completely downloaded.
      * 
-     * @return the time this video is completely downloaded.
+     * @return the time this downloadable is completely downloaded.
      */
     public long getFinishTime() {
         return mFinishTime;

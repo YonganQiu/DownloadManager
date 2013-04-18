@@ -10,7 +10,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.elvishew.download.library.BaseDownloadableColumns;
+import com.elvishew.download.library.server.DownloadModel.BaseDownloadableColumns;
 import com.elvishew.download.library.server.DownloadModel.Downloaded;
 import com.elvishew.download.library.server.DownloadModel.Downloading;
 

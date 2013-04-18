@@ -9,8 +9,8 @@ public class DownloadRequest implements Parcelable{
     String requester;
     String savePath;
 
-    public DownloadRequest(DownloadableItem video, String requester, String savePath) {
-        this.downloadable = video;
+    public DownloadRequest(DownloadableItem downloadable, String requester, String savePath) {
+        this.downloadable = downloadable;
         this.requester = requester;
         this.savePath = savePath;
     }
