@@ -24,7 +24,7 @@
         <provider
             android:name="com.elvishew.download.library.server.DownloadProvider"
             android:authorities="com.elvishew.download"
-            android:exported="false"
+            android:exported="true"
             android:multiprocess="false"
             android:syncable="false" >
         </provider>

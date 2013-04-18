@@ -30,7 +30,11 @@ public class DownloadService {
 
     private List<DownloadListener> mDownloadListeners;
 
-    public DownloadService(Context context, String requester) {
+    public interface OnServiceStateChangedListener {
+        void onServiceStateChanged(boolean alive);
+    }
+
+    public DownloadService(Context context, String requester, final OnServiceStateChangedListener l) {
         mContext = context;
         mRequester = requester;
         mDownloadClient = new DefaultDownloadClient();
@@ -41,18 +45,22 @@ public class DownloadService {
             public void onServiceConnectionSuccess(DownloadManager downloadManager) {
                 mDownloadManager = downloadManager;
                 mDownloadManager.registerClient(mRequester, mDownloadClient.getIDownloadClient());
+                mDownloadServiceAlive = true;
+                l.onServiceStateChanged(true);
             }
 
             @Override
             public void onServiceConnectionDisconnected() {
                 mDownloadManager = null;
                 mDownloadServiceAlive = false;
+                l.onServiceStateChanged(false);
             }
 
             @Override
             public void onServiceConnectionFailed() {
                 mDownloadManager = null;
                 mDownloadServiceAlive = false;
+                l.onServiceStateChanged(false);
             }
         });
 

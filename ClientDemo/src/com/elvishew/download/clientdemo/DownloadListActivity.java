@@ -3,7 +3,6 @@ package com.elvishew.download.clientdemo;
 
 import java.util.List;
 
-import android.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import com.elvishew.download.library.DownloadListener;
 import com.elvishew.download.library.client.DownloadService;
+import com.elvishew.download.library.client.DownloadService.OnServiceStateChangedListener;
 import com.elvishew.download.library.server.DownloadManager;
 import com.elvishew.download.library.server.DownloadProgressData;
 import com.elvishew.download.library.server.DownloadRequest;
@@ -52,65 +52,71 @@ public class DownloadListActivity extends Activity {
 
         setContentView(R.layout.download_list_activity);
 
-        mDownloadService = new DownloadService(this, "demo");
-        mDownloadService.registerDownloadListener(mDownloadListener);
-        mDownloadListener = new DefaultDownloadClient();
-
-        if (!StorageUtils.isSDCardPresent()) {
-            Toast.makeText(this, "未发现SD卡", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (!StorageUtils.isSdCardWrittenable()) {
-            Toast.makeText(this, "SD卡不能读写", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        mList = (ListView) findViewById(R.id.download_list);
-        mAdapter = new DownloadListAdapter(this, mDownloadService);
-        mList.setAdapter(mAdapter);
-
-        mAddDownloadButton = (Button) findViewById(R.id.btn_add1);
-        mPauseAllButton = (Button) findViewById(R.id.btn_pause_all);
-
-        mAddDownloadButton.setOnClickListener(new View.OnClickListener() {
+        mDownloadService = new DownloadService(this, "demo", new DownloadService.OnServiceStateChangedListener() {
             @Override
-            public void onClick(View v) {
-                addDownload(0);
-            }
-        });
+            public void onServiceStateChanged(boolean alive) {
+                // TODO Auto-generated method stub
+                mDownloadService.registerDownloadListener(mDownloadListener);
+                mDownloadListener = new DefaultDownloadClient();
 
-        findViewById(R.id.btn_add2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addDownload(1);
-            }
-        });
-        findViewById(R.id.btn_add3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addDownload(2);
-            }
-        });
-        findViewById(R.id.btn_add4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addDownload(3);
-            }
-        });
-        findViewById(R.id.btn_add5).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addDownload(4);
-            }
-        });
-        mPauseAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int result = mDownloadService.pauseAllDownloadings();
-                if (result != DownloadManager.ERROR_NO_ERROR) {
-                    Toast.makeText(DownloadListActivity.this, "Error happened: " + result, Toast.LENGTH_LONG).show();
+                if (!StorageUtils.isSDCardPresent()) {
+                    Toast.makeText(DownloadListActivity.this, "未发现SD卡", Toast.LENGTH_LONG).show();
+                    return;
                 }
+
+                if (!StorageUtils.isSdCardWrittenable()) {
+                    Toast.makeText(DownloadListActivity.this, "SD卡不能读写", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                mList = (ListView) findViewById(R.id.download_list);
+                mAdapter = new DownloadListAdapter(DownloadListActivity.this, mDownloadService);
+                mList.setAdapter(mAdapter);
+
+                mAddDownloadButton = (Button) findViewById(R.id.btn_add1);
+                mPauseAllButton = (Button) findViewById(R.id.btn_pause_all);
+
+                mAddDownloadButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addDownload(0);
+                    }
+                });
+
+                findViewById(R.id.btn_add2).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addDownload(1);
+                    }
+                });
+                findViewById(R.id.btn_add3).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addDownload(2);
+                    }
+                });
+                findViewById(R.id.btn_add4).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addDownload(3);
+                    }
+                });
+                findViewById(R.id.btn_add5).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addDownload(4);
+                    }
+                });
+                mPauseAllButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int result = mDownloadService.pauseAllDownloadings();
+                        if (result != DownloadManager.ERROR_NO_ERROR) {
+                            Toast.makeText(DownloadListActivity.this, "Error happened: " + result, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
             }
         });
 
