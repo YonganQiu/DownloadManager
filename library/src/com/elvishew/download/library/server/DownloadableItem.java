@@ -3,6 +3,7 @@ package com.elvishew.download.library.server;
 import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.elvishew.download.library.server.DownloadModel.BaseDownloadableColumns;
 
@@ -18,8 +19,10 @@ public class DownloadableItem implements Parcelable {
     }
 
     public DownloadableItem(Parcel source) {
+        Log.i("elvis", "createFromParcel DownloadableItem. 1");
         mUrl = source.readString();
         mName = source.readString();
+        Log.i("elvis", "createFromParcel DownloadableItem. 2");
     }
 
     /**
@@ -61,16 +64,21 @@ public class DownloadableItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mUrl);
         dest.writeString(mName);
+        RuntimeException re = new RuntimeException();
+        re.fillInStackTrace();
+        Log.i("elvis", "url " + mUrl + " name " + mName, re);
     }
 
     public static final Creator<DownloadableItem> CREATOR = new Creator<DownloadableItem>() {
         @Override
         public DownloadableItem createFromParcel(Parcel source) {
+            Log.i("elvis", "createFromParcel.");
             return new DownloadableItem(source);
         }
 
         @Override
         public DownloadableItem[] newArray(int size) {
+            Log.i("elvis", "newArray.");
             return new DownloadableItem[size];
         }
     };

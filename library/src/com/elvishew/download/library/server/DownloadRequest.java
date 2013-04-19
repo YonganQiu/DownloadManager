@@ -16,7 +16,7 @@ public class DownloadRequest implements Parcelable{
     }
 
     public DownloadRequest(Parcel source) {
-        this.downloadable = source.readParcelable(null);
+        this.downloadable = source.readParcelable(DownloadableItem.class.getClassLoader());
         this.requester = source.readString();
         this.savePath = source.readString();
     }

@@ -15,7 +15,7 @@ import android.util.Log;
 import com.elvishew.download.library.server.DownloadModel.Downloaded;
 import com.elvishew.download.library.server.DownloadModel.Downloading;
 import com.elvishew.download.library.server.DownloadTask.DownloadCallbacks;
-import com.elvishew.download.library.utils.NetworkUtils;
+import com.elvishew.download.library.utils.HttpChecker;
 import com.elvishew.download.library.utils.PathUtil;
 import com.elvishew.download.library.utils.StorageUtils;
 
@@ -144,7 +144,7 @@ class DownloadManagerImpl extends IDownloadManager.Stub implements DownloadCallb
             }
         }
 
-        if (!NetworkUtils.isNetworkAvailable(mContext)) {
+        if (!HttpChecker.isNetworkAvailable(mContext)) {
             return DownloadManager.ERROR_NETWORK_NOT_AVAILABLE;
         }
 

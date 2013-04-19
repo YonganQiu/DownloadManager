@@ -57,7 +57,7 @@ public class DownloadListActivity extends Activity {
             public void onServiceStateChanged(boolean alive) {
                 // TODO Auto-generated method stub
                 mDownloadService.registerDownloadListener(mDownloadListener);
-                mDownloadListener = new DefaultDownloadClient();
+                mDownloadListener = new DefaultDownloadListener();
 
                 if (!StorageUtils.isSDCardPresent()) {
                     Toast.makeText(DownloadListActivity.this, "未发现SD卡", Toast.LENGTH_LONG).show();
@@ -141,7 +141,7 @@ public class DownloadListActivity extends Activity {
         mDownloadService.unregisterDownloadListener(mDownloadListener);
     }
 
-    class DefaultDownloadClient implements DownloadListener {
+    class DefaultDownloadListener implements DownloadListener {
 
         @Override
         public void onDownloadAddingFail(DownloadRequest request, int errorCode) {

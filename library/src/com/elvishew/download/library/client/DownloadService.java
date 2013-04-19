@@ -18,8 +18,6 @@ import com.elvishew.download.library.server.DownloadingItem;
 
 public class DownloadService {
 
-    public static final String DOWNLOAD_SERVICE = "download_qpx";
-
     private Context mContext;
     private DownloadManager mDownloadManager;
     private DownloadClient mDownloadClient;
