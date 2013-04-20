@@ -1,5 +1,5 @@
 
-package com.elvishew.download.library.server;
+package com.elvishew.download.library;
 
 public class DownloadException extends Exception {
 

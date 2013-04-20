@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import com.elvishew.download.library.client.DownloadManager;
 import com.elvishew.download.library.client.DownloadService;
-import com.elvishew.download.library.server.DownloadManager;
-import com.elvishew.download.library.server.DownloadProgressData;
-import com.elvishew.download.library.server.DownloadingItem;
+import com.elvishew.download.library.model.DownloadProgressData;
+import com.elvishew.download.library.model.DownloadingItem;
 
 public class DownloadListAdapter extends BaseAdapter {
 

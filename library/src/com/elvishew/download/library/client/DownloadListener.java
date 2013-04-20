@@ -1,11 +1,11 @@
-package com.elvishew.download.library;
+package com.elvishew.download.library.client;
 
 import java.util.List;
 
-import com.elvishew.download.library.server.DownloadProgressData;
-import com.elvishew.download.library.server.DownloadRequest;
-import com.elvishew.download.library.server.DownloadedItem;
-import com.elvishew.download.library.server.DownloadingItem;
+import com.elvishew.download.library.model.DownloadProgressData;
+import com.elvishew.download.library.model.DownloadRequest;
+import com.elvishew.download.library.model.DownloadedItem;
+import com.elvishew.download.library.model.DownloadingItem;
 
 public interface DownloadListener {
 

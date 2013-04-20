@@ -6,15 +6,12 @@ import java.util.List;
 
 import android.content.Context;
 
-import com.elvishew.download.library.DownloadListener;
-import com.elvishew.download.library.server.DownloadClient;
-import com.elvishew.download.library.server.DownloadManager;
-import com.elvishew.download.library.server.DownloadManager.ServiceConnectionListener;
-import com.elvishew.download.library.server.DownloadProgressData;
-import com.elvishew.download.library.server.DownloadRequest;
-import com.elvishew.download.library.server.DownloadableItem;
-import com.elvishew.download.library.server.DownloadedItem;
-import com.elvishew.download.library.server.DownloadingItem;
+import com.elvishew.download.library.client.DownloadManager.ServiceConnectionListener;
+import com.elvishew.download.library.model.DownloadProgressData;
+import com.elvishew.download.library.model.DownloadRequest;
+import com.elvishew.download.library.model.DownloadableItem;
+import com.elvishew.download.library.model.DownloadedItem;
+import com.elvishew.download.library.model.DownloadingItem;
 
 public class DownloadService {
 

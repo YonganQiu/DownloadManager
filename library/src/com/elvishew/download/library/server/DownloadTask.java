@@ -20,6 +20,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.elvishew.download.library.DownloadException;
+import com.elvishew.download.library.client.DownloadManager;
+import com.elvishew.download.library.model.DownloadingItem;
 import com.elvishew.download.library.utils.HttpChecker;
 import com.elvishew.download.library.utils.PathUtil;
 

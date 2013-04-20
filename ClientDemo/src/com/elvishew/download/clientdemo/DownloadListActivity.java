@@ -11,15 +11,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.elvishew.download.library.DownloadListener;
+import com.elvishew.download.library.client.DownloadListener;
+import com.elvishew.download.library.client.DownloadManager;
 import com.elvishew.download.library.client.DownloadService;
-import com.elvishew.download.library.client.DownloadService.OnServiceStateChangedListener;
-import com.elvishew.download.library.server.DownloadManager;
-import com.elvishew.download.library.server.DownloadProgressData;
-import com.elvishew.download.library.server.DownloadRequest;
-import com.elvishew.download.library.server.DownloadableItem;
-import com.elvishew.download.library.server.DownloadedItem;
-import com.elvishew.download.library.server.DownloadingItem;
+import com.elvishew.download.library.model.DownloadProgressData;
+import com.elvishew.download.library.model.DownloadRequest;
+import com.elvishew.download.library.model.DownloadableItem;
+import com.elvishew.download.library.model.DownloadedItem;
+import com.elvishew.download.library.model.DownloadingItem;
 import com.elvishew.download.library.utils.PathUtil;
 import com.elvishew.download.library.utils.StorageUtils;
 
@@ -45,6 +44,8 @@ public class DownloadListActivity extends Activity {
 
     private DownloadListAdapter mAdapter;
 
+    private boolean mIsServiceAlive;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -55,74 +56,85 @@ public class DownloadListActivity extends Activity {
         mDownloadService = new DownloadService(this, "demo", new DownloadService.OnServiceStateChangedListener() {
             @Override
             public void onServiceStateChanged(boolean alive) {
-                // TODO Auto-generated method stub
-                mDownloadService.registerDownloadListener(mDownloadListener);
-                mDownloadListener = new DefaultDownloadListener();
+                mIsServiceAlive = alive;
+                if (alive) {
+                    mDownloadListener = new DefaultDownloadListener();
+                    mDownloadService.registerDownloadListener(mDownloadListener);
 
-                if (!StorageUtils.isSDCardPresent()) {
-                    Toast.makeText(DownloadListActivity.this, "未发现SD卡", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (!StorageUtils.isSdCardWrittenable()) {
-                    Toast.makeText(DownloadListActivity.this, "SD卡不能读写", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                mList = (ListView) findViewById(R.id.download_list);
-                mAdapter = new DownloadListAdapter(DownloadListActivity.this, mDownloadService);
-                mList.setAdapter(mAdapter);
-
-                mAddDownloadButton = (Button) findViewById(R.id.btn_add1);
-                mPauseAllButton = (Button) findViewById(R.id.btn_pause_all);
-
-                mAddDownloadButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addDownload(0);
+                    if (!StorageUtils.isSDCardPresent()) {
+                        Toast.makeText(DownloadListActivity.this, "未发现SD卡", Toast.LENGTH_LONG).show();
+                        return;
                     }
-                });
 
-                findViewById(R.id.btn_add2).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addDownload(1);
+                    if (!StorageUtils.isSdCardWrittenable()) {
+                        Toast.makeText(DownloadListActivity.this, "SD卡不能读写", Toast.LENGTH_LONG).show();
+                        return;
                     }
-                });
-                findViewById(R.id.btn_add3).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addDownload(2);
-                    }
-                });
-                findViewById(R.id.btn_add4).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addDownload(3);
-                    }
-                });
-                findViewById(R.id.btn_add5).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addDownload(4);
-                    }
-                });
-                mPauseAllButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int result = mDownloadService.pauseAllDownloadings();
-                        if (result != DownloadManager.ERROR_NO_ERROR) {
-                            Toast.makeText(DownloadListActivity.this, "Error happened: " + result, Toast.LENGTH_LONG).show();
+
+                    mList = (ListView) findViewById(R.id.download_list);
+                    mAdapter = new DownloadListAdapter(DownloadListActivity.this, mDownloadService);
+                    mList.setAdapter(mAdapter);
+
+                    mAddDownloadButton = (Button) findViewById(R.id.btn_add1);
+                    mPauseAllButton = (Button) findViewById(R.id.btn_pause_all);
+
+                    mAddDownloadButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addDownload(0);
                         }
-                    }
-                });
+                    });
 
+                    findViewById(R.id.btn_add2).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addDownload(1);
+                        }
+                    });
+                    findViewById(R.id.btn_add3).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addDownload(2);
+                        }
+                    });
+                    findViewById(R.id.btn_add4).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addDownload(3);
+                        }
+                    });
+                    findViewById(R.id.btn_add5).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addDownload(4);
+                        }
+                    });
+                    mPauseAllButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!mIsServiceAlive) {
+                                Toast.makeText(DownloadListActivity.this, "Not alive", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            int result = mDownloadService.pauseAllDownloadings();
+                            if (result != DownloadManager.ERROR_NO_ERROR) {
+                                Toast.makeText(DownloadListActivity.this, "Error happened: " + result, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                } else {
+                    
+                }
             }
         });
 
     }
 
     private void addDownload(int index) {
+        if (!mIsServiceAlive) {
+            Toast.makeText(DownloadListActivity.this, "Not alive", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (index >= downloadables.length) {
             index = 0;
         }

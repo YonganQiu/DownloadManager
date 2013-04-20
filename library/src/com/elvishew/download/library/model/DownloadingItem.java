@@ -1,4 +1,4 @@
-package com.elvishew.download.library.server;
+package com.elvishew.download.library.model;
 
 import android.content.res.Resources;
 import android.os.Parcel;

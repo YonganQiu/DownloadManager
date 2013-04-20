@@ -2,6 +2,11 @@ package com.elvishew.download.library.server;
 
 import android.os.AsyncTask;
 
+import com.elvishew.download.library.DownloadException;
+import com.elvishew.download.library.client.DownloadManager;
+import com.elvishew.download.library.model.DownloadRequest;
+import com.elvishew.download.library.model.DownloadableItem;
+import com.elvishew.download.library.model.DownloadingItem;
 import com.elvishew.download.library.utils.HttpUtil;
 import com.elvishew.download.library.utils.PathUtil;
 
@@ -11,7 +16,7 @@ class CreateLoaclFileTask extends AsyncTask<DownloadRequest, Void, DownloadingIt
 
     private int mErrorCode = DownloadManager.ERROR_UNKNOWN_ERROR;
 
-    public CreateLoaclFileTask(Callback callback) {
+    CreateLoaclFileTask(Callback callback) {
         super();
         mCallback = callback;
     }

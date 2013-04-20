@@ -1,4 +1,4 @@
-package com.elvishew.download.library.server;
+package com.elvishew.download.library.client;
 
 import java.util.List;
 
@@ -12,6 +12,10 @@ import android.os.RemoteException;
 
 import com.elvishew.download.library.Constants;
 import com.elvishew.download.library.R;
+import com.elvishew.download.library.model.DownloadRequest;
+import com.elvishew.download.library.model.DownloadedItem;
+import com.elvishew.download.library.model.DownloadingItem;
+import com.elvishew.download.library.server.IDownloadManager;
 
 public class DownloadManager {
 

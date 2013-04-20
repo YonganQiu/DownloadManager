@@ -2,26 +2,26 @@ package com.elvishew.download.library.server;
 
 import android.net.Uri;
 
-public class DownloadModel {
+class DownloadModel {
 
-    public static final String AUTHORITY = "com.elvishew.download";
+    static final String AUTHORITY = "com.elvishew.download";
 
-    public static final String PARAMETER_NOTIFY = "notify";
+    static final String PARAMETER_NOTIFY = "notify";
 
-    public static final String DB_FILE = "download.db";
+    static final String DB_FILE = "download.db";
 
     /**
      * All tables names are defined here.
      */
-    public static class Tables {
-        public static final String DOWNLOADED = "downloaded";
-        public static final String DOWNLOADING = "downloading";
+    static class Tables {
+        static final String DOWNLOADED = "downloaded";
+        static final String DOWNLOADING = "downloading";
     }
 
     /**
      * Base columns of an downloadable item.
      */
-    public interface BaseDownloadableColumns {
+    interface BaseDownloadableColumns {
 
         /**
          * ID column.
@@ -29,7 +29,7 @@ public class DownloadModel {
          * Type: INTEGER
          * </p>
          */
-        public static final String _ID = "_id";
+        static final String _ID = "_id";
 
         /**
          * The name of the downloadable.
@@ -37,7 +37,7 @@ public class DownloadModel {
          * Type: TEXT
          * </P>
          */
-        public static final String NAME = "name";
+        static final String NAME = "name";
 
         /**
          * The remote url of the downloadable, like
@@ -46,47 +46,47 @@ public class DownloadModel {
          * Type: TEXT
          * </P>
          */
-        public static final String URL = "url";
+        static final String URL = "url";
     }
 
     /**
      * Base columns of an download-like item.
      */
-    public interface BaseDownload extends BaseDownloadableColumns {
+    interface BaseDownload extends BaseDownloadableColumns {
         /**
          * The requester of download.
          * <P>Type: TEXT</P>
          */
-        public static final String REQUESTER = "REQUESTER";
+        static final String REQUESTER = "REQUESTER";
 
         /**
          * The save path of local downloadable.
          * <P>Type: TEXT</P>
          */
-        public static final String SAVE_PATH = "save_path";
+        static final String SAVE_PATH = "save_path";
 
         /**
          * The file length of downloadable.
          * <P>Type: INTEGER</P>
          */
-        public static final String FILE_LENGTH = "file_length";
+        static final String FILE_LENGTH = "file_length";
     }
 
     /**
      * Downloaded downloadables.
      */
-    public static class Downloaded implements BaseDownload {
+    static class Downloaded implements BaseDownload {
         /**
          * The content:// style URI for all downloaded downloadables.
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://"
+        static final Uri CONTENT_URI = Uri.parse("content://"
                 + AUTHORITY + "/" + Tables.DOWNLOADED);
 
         /**
          * The content:// style URI for all downloaded downloadables, with no notification when
          * downloaded downloadables change.
          */
-        public static final Uri CONTENT_URI_NO_NOTIFICATION = Uri
+        static final Uri CONTENT_URI_NO_NOTIFICATION = Uri
                 .parse("content://" + AUTHORITY + "/" + Tables.DOWNLOADED + "?"
                             + PARAMETER_NOTIFY + "=false");
 
@@ -94,12 +94,12 @@ public class DownloadModel {
          * The finish time of downloaded downloadable.
          * <P>Type: INTEGER</P>
          */
-        public static final String FINISH_TIME = "finish_time";
+        static final String FINISH_TIME = "finish_time";
 
         /**
          * SQL to create a new downloaded table, used when the app first opened.
          */
-        public static final String SQL_CREATE_TABLE = "CREATE TABLE " + Tables.DOWNLOADED +" (" + 
+        static final String SQL_CREATE_TABLE = "CREATE TABLE " + Tables.DOWNLOADED +" (" + 
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + 
                 NAME + " TEXT NOT NULL," + 
                 URL + " TEXT NOT NULL," + 
@@ -113,18 +113,18 @@ public class DownloadModel {
      * Downloading downloadables, we can pause, resume or cancel any download task
      * while downloading.
      */
-    public static class Downloading implements BaseDownload {
+    static class Downloading implements BaseDownload {
         /**
          * The content:// style URI for all downloading downloadables.
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://"
+        static final Uri CONTENT_URI = Uri.parse("content://"
                 + AUTHORITY + "/" + Tables.DOWNLOADING);
 
         /**
          * The content:// style URI for all downloading downloadables, with no notification when
          * downloading downloadables change.
          */
-        public static final Uri CONTENT_URI_NO_NOTIFICATION = Uri
+        static final Uri CONTENT_URI_NO_NOTIFICATION = Uri
                 .parse("content://" + AUTHORITY + "/" + Tables.DOWNLOADING + "?"
                             + PARAMETER_NOTIFY + "=false");
 
@@ -132,24 +132,24 @@ public class DownloadModel {
          * The start time of downloading downloadable.
          * <P>Type: INTEGER</P>
          */
-        public static final String START_TIME = "start_time";
+        static final String START_TIME = "start_time";
 
         /**
          * The completed length of downloading downloadable.
          * <P>Type: INTEGER</P>
          */
-        public static final String COMPLETED_LENGTH = "completed_length";
+        static final String COMPLETED_LENGTH = "completed_length";
 
         /**
          * The download state of downloading downloadable.
          * <P>Type: INTEGER</P>
          */
-        public static final String STATE = "state";
+        static final String STATE = "state";
 
         /**
          * SQL to create a new downloading table, used when the app first opened.
          */
-        public static final String SQL_CREATE_TABLE = "CREATE TABLE " + Tables.DOWNLOADING +" (" + 
+        static final String SQL_CREATE_TABLE = "CREATE TABLE " + Tables.DOWNLOADING +" (" + 
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + 
                 NAME + " TEXT NOT NULL," + 
                 URL + " TEXT NOT NULL," + 

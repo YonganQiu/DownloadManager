@@ -12,6 +12,13 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.elvishew.download.library.DownloadException;
+import com.elvishew.download.library.client.DownloadManager;
+import com.elvishew.download.library.client.IDownloadClient;
+import com.elvishew.download.library.model.DownloadProgressData;
+import com.elvishew.download.library.model.DownloadRequest;
+import com.elvishew.download.library.model.DownloadedItem;
+import com.elvishew.download.library.model.DownloadingItem;
 import com.elvishew.download.library.server.DownloadModel.Downloaded;
 import com.elvishew.download.library.server.DownloadModel.Downloading;
 import com.elvishew.download.library.server.DownloadTask.DownloadCallbacks;

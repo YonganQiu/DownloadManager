@@ -6,8 +6,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.elvishew.download.library.server.DownloadProgressData;
-import com.elvishew.download.library.server.DownloadingItem;
+import com.elvishew.download.library.model.DownloadProgressData;
+import com.elvishew.download.library.model.DownloadingItem;
 
 public class ViewHolder {
 

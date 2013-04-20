@@ -5,8 +5,8 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.elvishew.download.library.server.DownloadException;
-import com.elvishew.download.library.server.DownloadManager;
+import com.elvishew.download.library.DownloadException;
+import com.elvishew.download.library.client.DownloadManager;
 
 
 
@@ -24,6 +24,7 @@ public class HttpUtil {
             connection.disconnect();
             return remoteFileLength;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DownloadException(DownloadManager.ERROR_FETCH_FILE_LENGTH_FAIL);
         }
     }

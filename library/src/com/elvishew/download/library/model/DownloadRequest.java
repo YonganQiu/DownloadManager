@@ -1,13 +1,14 @@
-package com.elvishew.download.library.server;
+package com.elvishew.download.library.model;
+
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class DownloadRequest implements Parcelable{
 
-    DownloadableItem downloadable;
-    String requester;
-    String savePath;
+    public DownloadableItem downloadable;
+    public String requester;
+    public String savePath;
 
     public DownloadRequest(DownloadableItem downloadable, String requester, String savePath) {
         this.downloadable = downloadable;

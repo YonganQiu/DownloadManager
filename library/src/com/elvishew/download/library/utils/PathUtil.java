@@ -38,17 +38,6 @@ public class PathUtil {
     }
 
     /**
-     * Get the local cache file path for the remote file.
-     * 
-     * @param remotePath the path of the remote file
-     * @return the local cache file path
-     */
-    public static String getCacheFilePath(String remotePath) {
-        return getCachesDirectoryPath() + File.separator
-                + PathUtil.getName(remotePath);
-    }
-
-    /**
      * Get the local downloadable file path for the remote file.
      * 
      * @param name the name of the remote file
